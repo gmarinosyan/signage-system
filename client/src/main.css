@@ -1,0 +1,19 @@
+#appContainer {
+  background-color: #F2F2F2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 0px;
+  margin: 0px;
+}
+
+#pageContentContainer {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  position:relative;
+  padding-left: 40px;
+  padding-right: 40px;
+}

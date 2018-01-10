@@ -1,0 +1,57 @@
+#headerContainer {
+  background-color: white;
+  height: 90px;
+  color: white;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#header {
+  height: 90px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  position:relative;
+}
+
+#logo {
+  height: 90px;
+  width: auto;
+}
+
+#menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 90px;
+  width: 390px;
+  text-align: right;
+}
+
+.menuItem {
+  height: 70px;
+  width: 70px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  display: inline-block;
+  color: #5E5E5E;
+}
+
+.menuItem:hover, .menuItemSelected {
+  color: #FF7B02;
+  cursor: pointer;
+}
+
+.menuItemIcon {
+  
+}
+
+.menuItemName {
+  display: block;
+  margin-top: 10px;
+  font-family: Choplin;
+}

@@ -1,0 +1,25 @@
+body {
+  	margin: 0;
+  	padding: 0;
+  	font-family: sans-serif;
+  	position: absolute;
+  	top: 0;
+  	bottom: 0;
+  	right: 0;
+  	left: 0;
+  	min-width: 700px;
+}
+
+#root {
+	position: absolute;
+  	top: 0;
+  	bottom: 0;
+  	right: 0;
+  	left: 0;
+}
+
+@font-face {
+    font-family: Choplin;
+    src: url(./fonts/choplin.otf);
+    font-weight: medium;
+}
