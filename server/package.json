@@ -1,22 +1,12 @@
 {
-  "name": "express-restful-api",
+  "name": "signage-system-api",
   "version": "1.0.0",
-  "description": "Boilerplate for creating a RESTful API in node.js",
+  "description": "NodeJS and Express API for a digital signage system.",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
     "start": "node index.js --NODE_PORT=8080 --NODE_ENV=development"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tolgaek/express-restful-api.git"
-  },
-  "author": "Tolga Ekmen <tolga.ekmen@gmail.com> (https://github.com/tolgaek)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tolgaek/express-restful-api/issues"
-  },
-  "homepage": "https://github.com/tolgaek/express-restful-api",
   "dependencies": {
     "async": "^1.2.1",
     "aws-sdk": "*",
