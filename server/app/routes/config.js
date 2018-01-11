@@ -2,23 +2,10 @@
 var ConfigModel = require('../models/configModel');
 var NewsModel = require('../models/newsModel');
 var MediaModel = require('../models/mediaModel');
+var async = require('async');
 
 module.exports = function(router) {
   'use strict';
-  // This will handle the url calls for /users/:user_id
-  /*router.route('/:userId')
-  .get(function(req, res, next) {
-    // Return user
-  }) 
-  .put(function(req, res, next) {
-    // Update user
-  })
-  .patch(function(req, res,next) {
-    // Patch
-  })
-  .delete(function(req, res, next) {
-    // Delete record
-  }); */
 
   router.route('/')
   .get(function(req, res, next) {
@@ -32,7 +19,8 @@ module.exports = function(router) {
 
   .put(function(req, res, next) {
     var update = {
-      colourScheme:req.body.colourScheme
+      colourScheme:req.body.colourScheme,
+      lastUpdated: Date.now()
     }
     ConfigModel.findOneAndUpdate({}, update, {}, function(err, doc){
       if(err){
@@ -47,28 +35,61 @@ module.exports = function(router) {
   })
 
   .post(function(req, res, next) {
-    ConfigModel.remove({}, function(){
-      NewsModel.count({}, function(err, newsCount){
-        MediaModel.count({}, function(err, mediaCount){
-          var config = new ConfigModel();
-          config.lastUpdated = Date.now();
-          config.lastUpdatedMedia = Date.now();
-          config.lastUpdatedNews = Date.now();
-          config.colourScheme = "light";
-          if(req.body.colourScheme && req.body.colourScheme != ""){
-            config.colourScheme = req.body.colourScheme;
+    async.waterfall([
+      function(callback){
+        ConfigModel.remove({}, function(err){
+          if(err){
+            callback(err);
+          } else {
+            callback(null);
           }
-          config.mediaCount = mediaCount;
-          config.newsCount = newsCount;
-          config.save(function(err) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Config created (and reset)!' });
-          });
         });
-      });
-    });
+      },
+      function(callback){
+        NewsModel.count({}, function(err, newsCount){
+          if(err){
+            callback(err);
+          } else {
+            callback(null, newsCount);
+          }
+        });
+      },
+      function(newsCount, callback){
+        MediaModel.count({}, function(err, mediaCount){
+          if(err){
+            callback(err);
+          } else {
+            callback(null, newsCount, mediaCount);
+          }
+        });
+      },
+      function(newsCount, mediaCount, callback){
+        var config = new ConfigModel();
+        config.lastUpdated = Date.now();
+        config.lastUpdatedMedia = Date.now();
+        config.lastUpdatedNews = Date.now();
+        config.colourScheme = "light";
+        if(req.body.colourScheme && req.body.colourScheme != ""){
+          config.colourScheme = req.body.colourScheme;
+        }
+        config.mediaCount = mediaCount;
+        config.newsCount = newsCount;
+        config.save(function(err) {
+          if (err){
+            callback(err);
+          } else {
+            callback(null);
+          }
+        });
+      }],
+      function(err){
+        if(err){
+          res.send(err);
+        } else {
+          res.json({ message: 'Config created (and reset)!'});
+        }
+      }
+    );
   });
 
 };
